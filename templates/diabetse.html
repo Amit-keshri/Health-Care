@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Diabetes Prediction</title>
+    <div class="gradient-background"></div>
+    <style>
+       body{
+        background-image: url("static/images/deb.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+       
+      }
+      form {
+        border-radius: 12px;
+        max-width: 800px;
+        margin: 10px auto;
+        padding: 10px;
+      }
+      .form-back{
+        background-color: rgba(255, 255, 255, 0);
+        /* backdrop-filter: blur(10px);  */
+      }
+      .inputLabel{
+        font-size: 20px;
+        font-weight: 600;
+        color: #ab47bc !important;
+      }
+      .predict{
+        text-align: center;
+        margin-top: 20px;
+        font-size: 35px;
+        color: #e13c6b;
+      }
+      .predicted{
+        display: inline;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 16px;
+        width: fit-content;
+        pointer-events: none;
+      }
+      .brand {
+        background: #ab47bc !important;
+      }
+
+      .brand-text {
+        margin-top: 40px;
+        color: #a52aba !important;
+      }
+      .title{
+        text-align: center;
+        margin-top: 10px;
+      }
+      .titleInner{
+        display: inline;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: rgba(239 234 234 / 66%);
+        backdrop-filter: blur(10px);
+        font-size: 45px;
+        font-weight: 700;
+      }
+      .col{
+        position: relative;
+        margin-top: 40px;
+      }
+      label{
+        pointer-events: none;
+        position: absolute;
+        top: -35px;
+        left: 16px;
+        transform: translate(10px, 10px);
+        transform-origin: left;
+        transition: transform .25s;
+        z-index: 1;
+      }
+      #name{
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        font: inherit;
+        background-color: transparent;
+        outline: 2px solid rgb(255, 255, 255);
+      }
+      
+      .submit-group{
+        margin-top: 10px;
+      }
+      .center{
+       text-align: center;
+      }
+      .predicted{
+        margin-top: 10px;
+      }
+    
+      .bg-light{
+        background-color: rgba(240, 248, 255, 0.482) !important;
+      }
+      .brand-center{
+        text-align: center;
+        width: 100%;
+      }
+   </style>
+  </head>
+  <body class="gradient_background">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
+      <div class="" id="navbarSupportedContent">
+        <form class="my-2 my-lg-0" action="/">
+          <button class="btn my-2 my-sm-0" type="submit"> Home </button>
+        </form>
+      </div>
+      <div class="brand-center"><a class="navbar-brand" style="font-size: 35px;">Diabetes Prediction</a></div>
+    </nav>
+
+    <form action="/predict_diabetes" method="post">
+      <div class="row">
+        <div class="col center">
+          <label >Preganancies</label>
+          <input placeholder="" type="text" name="preganancies" value="{{preg}}" class="form-control">
+        </div>
+        <div class="col center">
+          <label>Glucose</label>
+          <input placeholder="" type="text" name="glucose" value="{{gluc}}" class="form-control">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col center">
+          <label >Blood Pressure</label>
+          <input placeholder="" type="text" name="bloodpress" value="{{bp}}" class="form-control">
+        </div>
+        <div class="col center">
+          <label >Skin Thickness</label>
+          <input placeholder="" type="text" name="skinthic" value="{{st}}" class="form-control">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col center">
+          <label >Insulin</label>
+          <input placeholder="" type="text" name="insulin" value="{{insu}}" class="form-control">
+        </div>
+        <div class="col center">
+          <label >BMI</label>
+          <input placeholder="" type="text" name="bmi" value="{{bmi}}" class="form-control">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col center">
+          <label >Diabetes Pedigree Function</label>
+          <input placeholder="" type="text" name="dpf" value="{{dpf}}" class="form-control">
+        </div>
+        <div class="col center">
+          <label >Age</label>
+          <input placeholder="" type="text" name="age" value="{{age}}" class="form-control">
+        </div>
+      </div>
+     
+    <br>
+  <div class="center">
+      <input type="submit" class="btn btn-primary title">
+    </div>
+  </form>
+  <div class="predict">
+    <div class="predict">{{ prediction }}</div>
+  </div>
+  
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script> -->
+  </body>
+</html>

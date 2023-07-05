@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Parkinson's Disease prediction</title>
+    <style>
+      body{
+        /* background-color:#e8c4ef; */
+        background-image: url("static/images/par.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      form {
+        border-radius: 12px;
+        max-width: 850px;
+        margin: 10px auto;
+        padding: 10px;
+      }
+      .form-back{
+        background-color: rgba(255, 255, 255, 0.657);
+        backdrop-filter: blur(10px); 
+      }
+      .inputLabel{
+        font-size: 20px !important;
+        font-weight: 600;
+        color: #ab47bc !important;
+      }
+      .predict{
+        text-align: center;
+        margin-top: 20px;
+      }
+      .predicted{
+        display: inline;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 16px;
+        width: fit-content;
+        pointer-events: none;
+      }
+      .brand {
+        background: #ab47bc !important;
+      }
+
+      .brand-text {
+        color: #ab47bc !important;
+      }
+      .title{
+        text-align: center;
+        margin-top: 10px;
+      }
+      .titleInner{
+        display: inline;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.657);
+        backdrop-filter: blur(10px);
+        font-size: 35px;
+      }
+      ::placeholder {
+          color: rgb(37, 35, 35);
+          opacity: 1; 
+        }
+        .bg-light{
+        background-color: rgba(240, 248, 255, 0.482) !important;
+      }
+      .brand-center{
+        text-align: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+      <!-- <div class="title">
+        <div class="titleInner brand-text">Parkinson's Disease prediction</div>   
+      </div> -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
+        <div class="" id="navbarSupportedContent">
+          <form class="my-2 my-lg-0" action="/">
+            <button class="btn my-2 my-sm-0" type="submit"> Home </button>
+          </form>
+        </div>
+        <div class="brand-center"><a class="navbar-brand" style="font-size: 35px;">Parkinson's Disease prediction</a></div>
+      </nav>
+        <form action="/predict_pa" method="POST" class="form-back purple-text">
+            <div class="row">
+                <div class="input-field col s4">
+                    <label class="inputLabel">MDVP Avg Freq.</label>
+                    <input placeholder="Range(65,240)" type="text" name="mdvp_fo" value="{{a}}">
+                </div>
+                <div class="input-field col s4">
+                    <label class="inputLabel">MDVP Max Freq.</label>
+                    <input placeholder="Range(102,592)" type="text" name="mdvp_fhi"value="{{b}}">
+                </div>
+                <div class="input-field col s4">
+                    <label class="inputLabel">MDVP Min Freq.</label>
+                    <input placeholder="Range(65,240)" type="text" name="mdvp_flo"value="{{c}}">  
+                </div>
+            </div>
+      
+            <div class="row">
+              <div class="input-field col s4">
+                <label class="inputLabel">MDVP Jitper</label>
+                <input placeholder="Range(0.001, 0.033)" type="text" name="mdvp_jitper"value="{{d}}">
+              </div>
+              <div class="input-field col s4">
+                <label class="inputLabel">MDVP:Jitter(Abs)</label>
+                <input placeholder="Range(0.00002, 0.0002)" type="text" name="mdvp_jitabs"value="{{e}}">
+              </div>
+              <div class="input-field col s4">
+                <label class="inputLabel">MDVP Rap</label>
+                <input placeholder="Range(0.0006, 0.02)" type="text" name="mdvp_rap"value="{{f}}">
+              </div>
+            </div>
+      
+            <div class="row">
+              <div class="input-field col s4">
+                <label class="inputLabel">MDVP:PPQ</label>
+                <input placeholder="Range(0.0009, 0.02)" type="text" name="MDVP:PPQ"value="{{ab}}">
+              </div>
+              <div class="input-field col s4">
+                <label class="inputLabel">Jitter:DDP</label>
+                <input placeholder="Range(0.002, 0.065)" type="text" name="Jitter:DDP"value="{{h}}">
+              </div>
+              <div class="input-field col s4">
+                <label class="inputLabel">MDVP:Shimmer</label>
+                <input placeholder="Range(0.009, 0.12)" type="text" name="MDVP:Shimmer"value="{{i}}">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s4">
+                <label class="inputLabel">MDVP:Shimmer(dB)</label>
+                <input placeholder="Range(0.085, 1.302)" type="text" name="MDVP:Shimmer(dB)"value="{{j}}" >
+              </div>
+              <div class="input-field col s4">
+                <label class="inputLabel">Shimmer:APQ3</label>
+                <input placeholder="Range(0.004, 0.056)" type="text" name="Shimmer:APQ3"value="{{k}}">
+              </div>
+              <div class="input-field col s4">
+                <label class="inputLabel">Shimmer:APQ5	</label>
+                <input placeholder="Range(0.005, 0.08)" type="text" name="Shimmer:APQ5" value="{{l}}">
+              </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s4">
+                  <label class="inputLabel">MDVP:APQ</label>
+                  <input placeholder="Range(0.007, 0.14)" type="text" name="MDVP:APQ" value="{{m}}">
+                </div>
+                <div class="input-field col s4">
+                  <label class="inputLabel">Shimmer:DDA</label>
+                  <input placeholder="Range(0.013, 0.17)" type="text" name="Shimmer:DDA"value="{{n}}">
+                </div>
+                <div class="input-field col s4">
+                  <label class="inputLabel">NHR	</label>
+                  <input placeholder="Range(0.0006, 0.31)" type="text" name="NHR" value="{{o}}">
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s4">
+                  <label class="inputLabel">HNR</label>
+                  <input placeholder="Range(0.007, 0.14)" type="text" name="HNR"value="{{p}}" >
+                </div>
+                <div class="input-field col s4">
+                  <label class="inputLabel">RPDE</label>
+                  <input placeholder="Range(0.25, 0.68)"type="text" name="RPDE"value="{{q}}">
+                </div>
+                <div class="input-field col s4">
+                  <label class="inputLabel">DFA</label>
+                  <input placeholder="Range(0.57, 0.82)" type="text" name="DFA"value="{{r}}" >
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s4">
+                  <label class="inputLabel">Spread1	</label>
+                  <input placeholder="Range(-7, -2)" type="text" name="spread1"value="{{s}}" >
+                </div>
+                <div class="input-field col s4">
+                  <label class="inputLabel">Spread2</label>
+                  <input placeholder="Range(0.006, 0.45)"type="text" name="spread2"value="{{t}}">
+                </div>
+                <div class="input-field col s4">
+                  <label class="inputLabel">D2</label>
+                  <input placeholder="Range(0.006, 0.45)"type="text" name="spread3"value="{{u}}">
+                </div>
+                
+              </div>
+              <div class="row">
+                <div class="input-field col s4">
+                  <label class="inputLabel">PPE</label>
+                  <input placeholder="0" type="text" name="ppe"value="{{v}}" >
+                </div>
+              </div>
+            <div class="center">
+              <input type="submit" class="btn brand z-depth-0">
+            </div>
+          </form>
+        
+    </form>
+    <div class="predict">
+      <div class="predicted btn brand z-depth-0">{{ prediction }}</div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
+</html>
